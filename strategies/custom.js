@@ -43,13 +43,13 @@ strat.check = function() {
   // Only continue if we have a new update.
   if(!this.toUpdate)
     return;
-
+  console.log(456)
   if(this.currentTrend === 'long') {
 
     // If it was long, set it to short
     this.currentTrend = 'short';
     this.advice('short');
-
+    console.log(123)
   } else {
 
     // If it was short, set it to long

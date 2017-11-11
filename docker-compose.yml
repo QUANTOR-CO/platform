@@ -1,11 +1,14 @@
 version: '3'
 services:
   gekko:
+    stdin_open: true
+    tty: true
     restart: always
     build: ./
     volumes:
       - ./volumes/gekko/history:/usr/src/app/history
-      - ./config.js:/usr/src/app/config.js
+      - ./config:/usr/src/app/config
+      - ./strategies:/usr/src/app/strategies
     links:
       - redis
 #      - postgresql
