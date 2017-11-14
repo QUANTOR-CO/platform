@@ -27,7 +27,6 @@ else
 var plugins = require(util.dirs().gekko + 'plugins');
 
 var version = adapter.version;
-
 var dbName = config.watch.exchange.toLowerCase() + '_' + version + '.db';
 var dir = dirs.gekko + adapter.dataDirectory;
 

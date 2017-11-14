@@ -1,62 +1,49 @@
-// This is a basic example strategy for Gekko.
-// For more information on everything please refer
-// to this document:
-//
-// https://gekko.wizb.it/docs/strategies/creating_a_strategy.html
-//
-// The example below is pretty bad investment advice: on every new candle there is
-// a 10% chance it will recommend to change your position (to either
-// long or short).
+/*
 
-var log = require('../core/log');
+  MACD - DJM 31/12/2013
 
-// Let's create our own strat
-var strat = {};
+  (updated a couple of times since, check git history)
 
-// Prepare everything our method needs
-strat.init = function() {
-  this.currentTrend = 'long';
-  this.requiredHistory = 0;
+ */
+
+// helpers
+var _ = require('lodash');
+var log = require('../core/log.js');
+
+// let's create our own method
+var method = {};
+
+// prepare everything our method needs
+method.init = function() {
+
 }
 
-// What happens on every new candle?
-strat.update = function(candle) {
+// what happens on every new candle?
+var long = true;
+method.update = function(candle) {
+ if(long){
+     long=false;
+     _.defer(function() {
+       this.emit('advice', {
+         recommendation: 'long',
+         portfolio: 100,
+         candle
+       });
+     }.bind(this));
+ }else{
 
-  // Get a random number between 0 and 1.
-  this.randomNumber = Math.random();
-
-  // There is a 10% chance it is smaller than 0.1
-  this.toUpdate = this.randomNumber < 0.1;
+     long=true;
+ }
 }
 
-// For debugging purposes.
-strat.log = function() {
-  log.debug('calculated random number:');
-  log.debug('\t', this.randomNumber.toFixed(3));
+// for debugging purposes: log the last calculated
+// EMAs and diff.
+method.log = function() {
+
 }
 
-// Based on the newly calculated
-// information, check if we should
-// update or not.
-strat.check = function() {
+method.check = function() {
 
-  // Only continue if we have a new update.
-  if(!this.toUpdate)
-    return;
-  console.log(456)
-  if(this.currentTrend === 'long') {
-
-    // If it was long, set it to short
-    this.currentTrend = 'short';
-    this.advice('short');
-    console.log(123)
-  } else {
-
-    // If it was short, set it to long
-    this.currentTrend = 'long';
-    this.advice('long');
-
-  }
 }
 
-module.exports = strat;
+module.exports = method;
