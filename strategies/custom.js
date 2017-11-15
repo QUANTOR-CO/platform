@@ -31,7 +31,13 @@ method.update = function(candle) {
        });
      }.bind(this));
  }else{
-
+    _.defer(function() {
+       this.emit('advice', {
+         recommendation: 'short',
+         portfolio: 100,
+         candle
+       });
+     }.bind(this));
      long=true;
  }
 }
