@@ -16,7 +16,7 @@ services:
      - HOST
      - PORT
     ports: # you can comment this out when using the nginx frontend
-      - "${PORT}:${PORT}"
+      - 3000:3000
 ## optionally set nginx vars if you wish to frontend it with nginx
 #    environment:
 #     - VIRTUAL_HOST=gekko
