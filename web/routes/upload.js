@@ -1,13 +1,12 @@
 const gekkoRoot = __dirname + '/../../';
-const fs = require('fs');
+const fs = require('co-fs');
 
 module.exports = function *() {
-  const strategyDir = yield fs.readdir(gekkoRoot + 'strategies');
+  const strategyDir = gekkoRoot + 'strategies'
   let name = this.request.body.name;
   let code = this.request.body.code;
-  console.log(name);
-  console.log(code);
-  fs.writeFile(strategyDir + "/" + name + ".js", code, function(err) {
+  var options = { flag : 'w' };
+  fs.writeFile(strategyDir + "/" + name + ".js", code, options, function(err) {
       if(err) {
            console.log(err);
         this.body = {
